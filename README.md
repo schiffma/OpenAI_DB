@@ -26,14 +26,15 @@ DuckDB database [DuckDB database](https://duckdb.org/).
    ```
 
 5. Add your [API key](https://platform.openai.com/account/api-keys) to the newly created `.env` file.
+   ``OPENAI_API_KEY=<your key>``
 
-6. Create the GWR-DuckDB database:
+7. Create the GWR-DuckDB database:
 
    ```bash
    $ python load_GWR_PLZ_from_csv_duckdb.py
    ```
 
-7. Run the app:
+8. Run the app:
 
    ```bash
    $ python openai_sql_duckdb.py
