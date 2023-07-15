@@ -90,82 +90,35 @@ LIMIT 10;
 > Total Runtime of open_ai_sql: 13.13 second.
 
 Question: 5 kantone mit den durchschnittlich ältesten Gebäude?
-prompt_tokens:  1258
-total_tokens:  1360
->> Runtime of OpenAI: 7.79 second.
+prompt_tokens:  1230
+total_tokens:  1480
+>> Runtime of OpenAI: 16.10 second.
 
->> Total Runtime of eval_sql: 0.07 second.
-
-ChatGPT[gwr_ch_bfs_duck.db]: 
-+----+----------+--------------------+
-|    | kanton   |   avg_building_age |
-|----+----------+--------------------|
-|  0 | FR       |            2004.34 |
-|  1 | UR       |            1992.26 |
-|  2 | GE       |            1988.27 |
-|  3 | GL       |            1984.5  |
-|  4 | SO       |            1982.31 |
-+----+----------+--------------------+
-WITH building_age AS (
-    SELECT 
-        BUILDING.GDEKT AS kanton,
-        AVG(BUILDING.GBAUJ) AS avg_building_age
-    FROM 
-        BUILDING
-    WHERE 
-        BUILDING.GBAUJ IS NOT NULL
-    GROUP BY 
-        BUILDING.GDEKT
-)
-
-SELECT 
-    building_age.kanton,
-    building_age.avg_building_age
-FROM 
-    building_age
-ORDER BY 
-    building_age.avg_building_age DESC
-LIMIT 5;
-
-> Total Runtime of open_ai_sql: 7.87 second.
-
-Question: das gleiche aber mit alter
-prompt_tokens:  1268
-total_tokens:  1370
->> Runtime of OpenAI: 6.81 second.
-
->> Total Runtime of eval_sql: 0.05 second.
+>> Total Runtime of eval_sql: 0.08 second.
 
 ChatGPT[gwr_ch_bfs_duck.db]: 
-+----+----------+-----------+
-|    | kanton   |   avg_age |
-|----+----------+-----------|
-|  0 | BS       |   82.8977 |
-|  1 | AI       |   79.9786 |
-|  2 | OW       |   77.9963 |
-|  3 | VD       |   71.401  |
-|  4 | GR       |   67.9431 |
-+----+----------+-----------+
-WITH building_age AS (
-    SELECT 
-        BUILDING.GDEKT AS kanton,
-        AVG(BUILDING.GBAUJ) AS avg_building_age
-    FROM 
-        BUILDING
-    WHERE 
-        BUILDING.GBAUJ IS NOT NULL
-    GROUP BY 
-        BUILDING.GDEKT
-)
++----+----------+----------------------------+
+|    | Kanton   |   Durchschnittliches_Alter |
+|----+----------+----------------------------|
+|  0 | BS       |                    83.8977 |
+|  1 | AI       |                    81.0066 |
+|  2 | OW       |                    78.9827 |
+|  3 | VD       |                    72.401  |
+|  4 | GR       |                    69.0565 |
++----+----------+----------------------------+
 SELECT 
-    kanton,
-    2022 - avg_building_age AS avg_age
+    BUILDING.GDEKT AS Kanton, 
+    AVG(EXTRACT(YEAR FROM CURRENT_DATE) - BUILDING.GBAUJ) AS Durchschnittliches_Alter
 FROM 
-    building_age
+    BUILDING
+WHERE 
+    BUILDING.GBAUJ IS NOT NULL
+GROUP BY 
+    BUILDING.GDEKT
 ORDER BY 
-    avg_age DESC
+    Durchschnittliches_Alter DESC
 LIMIT 5;
 
-> Total Runtime of open_ai_sql: 6.86 second.
+> Total Runtime of open_ai_sql: 16.19 second.
 
 ```
