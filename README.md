@@ -30,7 +30,7 @@ Context is given in [gwr_ch_bfs_context.txt](https://github.com/schiffma/OpenAI_
 5. Add your [API key](https://platform.openai.com/account/api-keys) to the newly created `.env` file.
 
    ```
-   OPENAI_API_KEY=<your Open AI API key>
+   OPENAI_API_KEY=<your OpenAI API key>
    ```
 
 6. Create the GWR-DuckDB database:
