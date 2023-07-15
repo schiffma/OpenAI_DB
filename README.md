@@ -47,10 +47,54 @@ Context is given in [gwr_ch_bfs_context.txt](https://github.com/schiffma/OpenAI_
    
 ## Examples
 
-The following examples consist of questions formulated in German and their answers/results as tabulated dataframes and the generated SQL-statements 
+The following examples consist of questions formulated in English and German and their answers/results as tabulated dataframes and the generated SQL-statements 
 used to generate them.
 
 ```
+Question: 10 locations with the highest percentage of hotels?
+prompt_tokens:  1495
+total_tokens:  1707
+>> Runtime of OpenAI: 13.92 second.
+
+>> Total Runtime of eval_sql: 0.10 second.
+
+ChatGPT[gwr_ch_bfs_duck.db]: 
++----+--------------------+--------------------+
+|    | DPLZNAME           |   hotel_percentage |
+|----+--------------------+--------------------|
+|  0 | Serpiano           |           40       |
+|  1 | Jungfraujoch       |           33.3333  |
+|  2 | Bürgenstock        |           23.5955  |
+|  3 | Kleine Scheidegg   |           19.2308  |
+|  4 | Vulpera            |           15.873   |
+|  5 | Alp Grüm           |           12.5     |
+|  6 | Samnaun Dorf       |           12.2995  |
+|  7 | Acquarossa         |           11.9048  |
+|  8 | Sils/Segl Baselgia |           10.5263  |
+|  9 | Zermatt            |            9.56194 |
++----+--------------------+--------------------+
+WITH hotel_count AS (
+    SELECT ENTRANCE.DPLZNAME, COUNT(*) AS total_hotels
+    FROM BUILDING
+    JOIN ENTRANCE ON BUILDING.EGID = ENTRANCE.EGID
+    JOIN CODES ON BUILDING.GKLAS = CODES.CECODID
+    WHERE CODES.CODTXTLD = 'Hotelgebäude'
+    GROUP BY ENTRANCE.DPLZNAME
+),
+total_buildings AS (
+    SELECT ENTRANCE.DPLZNAME, COUNT(*) AS total
+    FROM BUILDING
+    JOIN ENTRANCE ON BUILDING.EGID = ENTRANCE.EGID
+    GROUP BY ENTRANCE.DPLZNAME
+)
+SELECT hotel_count.DPLZNAME, (hotel_count.total_hotels::decimal / total_buildings.total::decimal) * 100 AS hotel_percentage
+FROM hotel_count
+JOIN total_buildings ON hotel_count.DPLZNAME = total_buildings.DPLZNAME
+ORDER BY hotel_percentage DESC
+LIMIT 10;
+
+> Total Runtime of open_ai_sql: 14.02 second.
+
 Question: 10 orte mit dem höchsten hotelanteil prozentual?
 prompt_tokens:  1237
 total_tokens:  1458
@@ -94,6 +138,45 @@ ORDER BY hotel_percentage DESC
 LIMIT 10;
 
 > Total Runtime of open_ai_sql: 13.13 second.
+
+Question: 5 cantons with the oldest buildings on average?
+prompt_tokens:  1228
+total_tokens:  1330
+>> Runtime of OpenAI: 4.49 second.
+
+>> Total Runtime of eval_sql: 0.02 second.
+
+ChatGPT[gwr_ch_bfs_duck.db]: 
++----+----------+---------------+
+|    | Canton   |   Average_Age |
+|----+----------+---------------|
+|  0 | BS       |       83.8977 |
+|  1 | AI       |       81.0066 |
+|  2 | OW       |       78.9827 |
+|  3 | VD       |       72.401  |
+|  4 | GR       |       69.0565 |
++----+----------+---------------+
+WITH avg_age AS (
+    SELECT 
+        BUILDING.GDEKT AS Canton,
+        AVG(EXTRACT(YEAR FROM CURRENT_DATE) - BUILDING.GBAUJ) AS Average_Age
+    FROM 
+        BUILDING
+    WHERE 
+        BUILDING.GBAUJ IS NOT NULL
+    GROUP BY 
+        BUILDING.GDEKT
+)
+SELECT 
+    Canton,
+    Average_Age
+FROM 
+    avg_age
+ORDER BY 
+    Average_Age DESC
+LIMIT 5;
+
+> Total Runtime of open_ai_sql: 4.51 second.
 
 Question: 5 kantone mit den durchschnittlich ältesten Gebäude?
 prompt_tokens:  1230
