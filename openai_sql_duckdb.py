@@ -23,7 +23,7 @@ context = "gwr_ch_bfs"
 db = context + "_duck.db"
 db_file = "data/" + db
 context_file = "data/" + context + "_context.txt"
-select_pattern = '(SELECT|WITH).+?([;]|[`]{3})' # find SQL non-greedy !!!
+select_pattern = '(SELECT|WITH)(.|\n)+?([;]|[`]{3})' # find SQL non-greedy !!!
 
 # openai_model = "gpt-3.5-turbo"
 openai_model = "gpt-4"
@@ -75,9 +75,9 @@ def open_ai_sql(messages):
     reply = chat.choices[0].message.content            
     eval_sql_res = False
 
-    answer_1line = " ".join(reply.splitlines())            
+    #answer_1line = " ".join(reply.splitlines())            
     sql = ""
-    matches = re.finditer(select_pattern, answer_1line)
+    matches = re.finditer(select_pattern, reply)
     for match in matches: # get last sql
         sql = match.group()
     if len(sql) > 0:    
