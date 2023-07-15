@@ -105,8 +105,7 @@ def sql_answer(conn, context_text):
             # query = context_text + query
             messages.append({"role": "user", "content": query})                        
             try:  
-                open_ai_sql(messages)
-                context_text = ""         
+                open_ai_sql(messages)       
             except Exception as e:
               print(f"OpenAI-Error {e}")
 
