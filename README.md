@@ -27,7 +27,7 @@ Context is given in [gwr_ch_bfs_context.txt](https://github.com/schiffma/OpenAI_
    $ pip install -r requirements.txt
    ```
 
-5. Add your [API key](https://platform.openai.com/account/api-keys) to the newly created `.env` file.
+5. Add your [OpenAI API key](https://platform.openai.com/account/api-keys) to the newly created `.env` file.
 
    ```
    OPENAI_API_KEY=<your OpenAI API key>
