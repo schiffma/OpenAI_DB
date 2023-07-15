@@ -13,12 +13,12 @@ import time
 import zipfile
 
 DOWNLOAD_BFS_EGID = True
-DOWNLOAD_POST_PLZ_POP = True
+DOWNLOAD_POST_PLZ_POP = False
 LOAD_EINGANG = True
 LOAD_GEBAEUDE = True
 LOAD_WOHNUNG = True
 LOAD_CODES = True
-LOAD_PLZ_POP = True
+LOAD_PLZ_POP = False
 
 bfs_data_link="https://public.madd.bfs.admin.ch/ch.zip" # all available BFS data for CH
 post_plz_pop_data_link = 'https://swisspost.opendatasoft.com/api/explore/v2.1/catalog/datasets/bevoelkerung_proplz/exports/csv?lang=de&timezone=Europe%2FBerlin&use_labels=true&delimiter=%3B'
@@ -27,8 +27,7 @@ downloads_path = '~/Downloads'
 # or /home/<user>/Downloads on Linux
 downloads_path_str = str(Path(downloads_path).expanduser())
 
-documents_path = '~/Downloads'
-documents_path_str = str(Path(documents_path).expanduser())
+data_path = 'data'
 
 base_path_str  = downloads_path_str
 
@@ -49,21 +48,7 @@ plz_pop_table = "PLZ_POP"
 
 
 DUCK_DB = 'gwr_ch_bfs_duck.db'
-PATH_TO_DUCK_DB = documents_path_str + "/" + DUCK_DB
-
-
-gwr_building_community_v = """
-CREATE OR REPLACE VIEW GWR_BUILDING_COMMUNITY_V AS
-SELECT b.EGID, e.EDID ,  b.GDEKT, e.DPLZ4, e.DPLZNAME  FROM BUILDING b
-JOIN  ENTRANCE e ON b.EGID = e.EGID;
-""" 
-
-gwr_dwelling_community_v = """
-CREATE OR REPLACE VIEW GWR_DWELLING_COMMUNITY_V AS
-SELECT b.EGID, e.EDID, d.EWID,  b.GDEKT, e.DPLZ4, e.DPLZNAME  FROM BUILDING b
-JOIN  ENTRANCE e ON b.EGID = e.EGID
-JOIN  DWELLING d ON b.EGID = d.EGID; 
-"""
+PATH_TO_DUCK_DB = data_path + "/" + DUCK_DB
 
 
 load_mapping = [[gwr_eingang_filepath,gwr_eingang_table],
