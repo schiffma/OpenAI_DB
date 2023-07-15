@@ -25,6 +25,9 @@ db_file = "data/" + db
 context_file = "data/" + context + "_context.txt"
 select_pattern = '(SELECT|WITH).+?([;]|[`]{3})' # find SQL non-greedy !!!
 
+# openai_model = "gpt-3.5-turbo"
+openai_model = "gpt-4"
+openai_temperature = 0.1
 
 
 def read_txt_file(file_name):
@@ -56,8 +59,8 @@ def open_ai_sql(messages):
     time_start = time.time() 
     time_start_openai = time.time()
     chat = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
-        temperature = 0.1,
+        model=openai_model,
+        temperature = openai_temperature,
         n = 1,
         max_tokens=2048,
         messages=messages

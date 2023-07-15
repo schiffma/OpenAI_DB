@@ -4,18 +4,11 @@ Entities/Tables:
 Building (German alias Gebäude, do not use alias in SQL)
 Entrance (German alias Eingang, do not use alias in SQL)
 Dwelling (German alias Wohnung, do not use alias in SQL)
-PLZ_POP  (German alias Bevölkerung, do not use alias in SQL)
-
 
 List of SQL relevant columns <table>.<column>, their data type and their description:
 
 CODES.CECODID , BIGINT,  ID für Join mit BUILDING.GKLAS und BUILDING.GSTAT
 CODES.CODTXTLD, VARCHAR, Text value, do not use for joining
-
-PLZ_POP.PLZ , BIGINT,  PLZ / Postleitzahl on Entity PLZ_POP
-PLZ_POP.ANZAHL, BIGINT, Anzahl Personen/Einwohner pro Geschlecht und Ort
-PLZ_POP.TYP, VARCHAR, Geschlecht / m=männlich w=weiblich f=weiblich
-PLZ_POP.ORTBEZ18, VARCHAR, Ort / Ortsbezeichnung
 
 ENTRANCE.EGID, BIGINT, Eidgenössischer Gebäudeidentifikator
 ENTRANCE.EDID, BIGINT, Eidgenössischer Eingangsidentifikator
@@ -47,7 +40,6 @@ DWELLING.WAREA, BIGINT, Wohnungsfläche
 DWELLING.WAZIM, BIGINT, Anzahl Zimmer
 
 Linking column between real estate tables is EGID (ENTRANCE.EGID, BUILDING.EGID, DWELLING.EGID)
-Linking columns between ENTRANCE and PLZ_POP are ENTRANCE.DPLZ4 and PLZ_POP.PLZ
 
 For Building status use linking columns CODES.CECODID with filter CODES.CMERKM = 'GSTAT' and BUILDING.GSTAT
 CODES.CODTXTLD Values for numeric BUILDING.GSTAT:
