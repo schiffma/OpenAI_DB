@@ -5,7 +5,7 @@ The default use case is the public available [GWR](https://www.housing-stat.ch/d
 about all entrances, buildings and dwellings according to official registration in Switzerland (compiled by the Swiss Federal Statistical Office).
 
 The script ``load_GWR_PLZ_from_csv_duckdb.py`` will download the data and convert the .csv-feeds to a fast relational 
-DuckDB database [DuckDB database](https://duckdb.org/).
+DuckDB database [DuckDB](https://duckdb.org/).
 
 Context is given in [gwr_ch_bfs_context.txt](https://github.com/schiffma/OpenAI_DB/blob/main/data/gwr_ch_bfs_context.txt), this will be loaded once on the beginning of the ```openai.ChatCompletion``` session.
 
