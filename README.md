@@ -1,5 +1,7 @@
 # OpenAI_DB
 
+![logo](data/logo.jpg)
+
 Python program using the OpenAI-API to create SQL-statements based on a context given and execute them on a default database.
 The default use case is the public available [GWR](https://www.housing-stat.ch/de/madd/public.html) data set, a data set
 about all entrances, buildings and dwellings according to official registration in Switzerland (compiled by the Swiss Federal Statistical Office).
