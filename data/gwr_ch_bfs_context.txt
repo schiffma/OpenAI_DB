@@ -21,7 +21,7 @@ BUILDING.EGID, BIGINT, Eidgenössischer Gebäudeidentifikator
 BUILDING.GBEZ, VARCHAR, Gebäudename
 BUILDING.GDEKT, VARCHAR, Kantonskürzel (e.g. BE, ZH, AG, immer upper-case)
 BUILDING.GAREA, BIGINT, Gebäudefläche
-BUILDING.GBAUJ, BIGINT, Baujahr des Gebäudes YYYY, use year integer to calculate age
+BUILDING.GBAUJ, BIGINT, Baujahr des Gebäudes YYYY, use year as integer to calculate age
 BUILDING.GABBJ, BIGINT, Abbruchjahr des Gebäude, use year as integer to calculate age
 BUILDING.GASTW, BIGINT, Anzahl Geschosse/Stockwerke
 BUILDING.GANZWHG, BIGINT, Anzahl Wohnungen
