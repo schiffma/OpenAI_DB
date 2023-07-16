@@ -18,12 +18,11 @@ from dotenv import load_dotenv
 load_dotenv()
 openai.api_key = os.environ.get('OPENAI_API_KEY')
 
-#db = chinook.db"
 context = "gwr_ch_bfs"
 db = context + "_duck.db"
 db_file = "data/" + db
 context_file = "data/" + context + "_context.txt"
-select_pattern = '(SELECT|WITH)(.|\n)+?([;]|[`]{3})' # find SQL non-greedy !!!
+select_pattern = '(SELECT|WITH)(.|\n)+?([;]|[`]{3})' # find (multi-line) SQL non-greedy !!!
 
 # openai_model = "gpt-3.5-turbo"
 openai_model = "gpt-4"
@@ -78,7 +77,7 @@ def open_ai_sql(messages):
     #answer_1line = " ".join(reply.splitlines())            
     sql = ""
     matches = re.finditer(select_pattern, reply)
-    for match in matches: # get last sql
+    for match in matches: # get last sql, usually the best one
         sql = match.group()
     if len(sql) > 0:    
         # print(f"SQL found in answer: {sql}")
@@ -98,11 +97,9 @@ def sql_answer(conn, context_text):
     messages.append({"role": "system", "content": context_text})
     while True:        
         query = input("\nQuestion: ")
-        #query = prompt("\nQuestion: ")
         if query == "exit":
             break    
         if query:           
-            # query = context_text + query
             messages.append({"role": "user", "content": query})                        
             try:  
                 open_ai_sql(messages)       
