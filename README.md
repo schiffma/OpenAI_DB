@@ -9,12 +9,12 @@ Currently there are two configured topics as examples:
 * gpp
   [GPP](https://datasets.wri.org/dataset/globalpowerplantdatabase), a comprehensive, global, open source database of power plants.
 
-* gwr_ch_nfs
+* gwr_ch_bfs
    [GWR](https://www.housing-stat.ch/de/madd/public.html), an open Swiss data set about all entrances, buildings and dwellings according to official registration in Switzerland (compiled by the Swiss Federal Statistical Office).
 
 The scripts ``load_GWR_PLZ_from_csv_duckdb.py`` and ``load_Global_Power_Plants_from_csv_duckdb.py`` will download the data and convert the .csv-feeds to a fast relational [DuckDB database](https://duckdb.org/) for each topic.
 
-Context for each topic is given in [data](https://github.com/schiffma/OpenAI_DB/blob/main/data), this will be loaded once on the beginning of the ```openai.ChatCompletion``` session.
+Context for each topic is given in [data](https://github.com/schiffma/OpenAI_DB/blob/main/data), this will be loaded once on the beginning of the ```openai.ChatCompletion``` session based on the topic set.
 
 ## Setup
 
@@ -60,6 +60,74 @@ Context for each topic is given in [data](https://github.com/schiffma/OpenAI_DB/
 The following examples consist of questions formulated in English and German and their answers/results as tabulated dataframes and the generated SQL-statements 
 used to generate them.
 
+**gpp**
+```
+runfile('G:/My Drive/GitHub/OpenAI_DB/openai_sql_duckdb.py', wdir='G:/My Drive/GitHub/OpenAI_DB')
+
+Question: 10 countries with most percentage of nuclear power
+prompt_tokens:  1064
+total_tokens:  1367
+>> Runtime of OpenAI: 19.87 second.
+
+>> Total Runtime of eval_sql: 0.00 second.
+
+ChatGPT[gpp_duck.db]: 
++----+-----------+----------------------+
+|    | country   |   nuclear_percentage |
+|----+-----------+----------------------|
+|  0 | FRA       |              57.0713 |
+|  1 | BEL       |              44.2066 |
+|  2 | SWE       |              36.9511 |
+|  3 | HUN       |              29.9935 |
+|  4 | UKR       |              28.4848 |
+|  5 | SVK       |              28.2465 |
+|  6 | CHE       |              26.1473 |
+|  7 | SVN       |              25.4386 |
+|  8 | CZE       |              24.7337 |
+|  9 | FIN       |              23.3284 |
++----+-----------+----------------------+
+WITH total_power AS (
+    SELECT 
+        country, 
+        SUM(capacity_mw) AS total_capacity_mw
+    FROM 
+        GPP 
+    GROUP BY 
+        country
+), 
+nuclear_power AS (
+    SELECT 
+        country, 
+        SUM(capacity_mw) AS nuclear_capacity_mw
+    FROM 
+        GPP 
+    WHERE 
+        primary_fuel = 'Nuclear' 
+    GROUP BY 
+        country
+),
+nuclear_percentage AS (
+    SELECT 
+        total_power.country, 
+        (nuclear_power.nuclear_capacity_mw / total_power.total_capacity_mw) * 100 AS nuclear_percentage
+    FROM 
+        total_power 
+    JOIN 
+        nuclear_power ON total_power.country = nuclear_power.country
+)
+SELECT 
+    country, 
+    nuclear_percentage
+FROM 
+    nuclear_percentage
+ORDER BY 
+    nuclear_percentage DESC
+LIMIT 10;
+
+> Total Runtime of open_ai_sql: 19.88 second.
+```
+
+**gwr_ch_bfs**
 ```
 Question: 10 locations with the highest percentage of hotels?
 prompt_tokens:  1495
