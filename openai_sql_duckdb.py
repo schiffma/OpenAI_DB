@@ -18,7 +18,7 @@ from dotenv import load_dotenv
 load_dotenv()
 openai.api_key = os.environ.get('OPENAI_API_KEY')
 
-context = "gwr_ch_bfs"
+context = "gpp"
 db = context + "_duck.db"
 db_file = "data/" + db
 context_file = "data/" + context + "_context.txt"
