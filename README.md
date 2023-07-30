@@ -40,7 +40,7 @@ Context for each topic is given in [data](https://github.com/schiffma/OpenAI_DB/
    OPENAI_API_KEY=<your OpenAI API key>
    ```
 
-6. Create the GWR-DuckDB databases:
+6. Create the DuckDB databases for the topics available:
 
    ```bash
    $ python load_Global_Power_Plants_from_csv_duckdb.py
