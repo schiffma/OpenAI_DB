@@ -3,12 +3,18 @@
 ![logo](data/logo.jpg)
 
 Python program using the OpenAI-API to create SQL-statements based on a context given and execute them on a default database.
-The default use case is the public available [GWR](https://www.housing-stat.ch/de/madd/public.html) data set, a data set
-about all entrances, buildings and dwellings according to official registration in Switzerland (compiled by the Swiss Federal Statistical Office).
 
-The script ``load_GWR_PLZ_from_csv_duckdb.py`` will download the data and convert the .csv-feeds to a fast relational [DuckDB database](https://duckdb.org/).
+Currently there are two configured topics as examples:
 
-Context is given in [gwr_ch_bfs_context.txt](https://github.com/schiffma/OpenAI_DB/blob/main/data/gwr_ch_bfs_context.txt), this will be loaded once on the beginning of the ```openai.ChatCompletion``` session.
+* gpp
+  [GPP](https://datasets.wri.org/dataset/globalpowerplantdatabase), a comprehensive, global, open source database of power plants.
+
+* gwr_ch_nfs
+   [GWR](https://www.housing-stat.ch/de/madd/public.html) Swiss data set, a data set about all entrances, buildings and dwellings according to official registration in Switzerland (compiled by the Swiss Federal Statistical Office).
+
+The scripts ``load_GWR_PLZ_from_csv_duckdb.py`` and ``load_Global_Power_Plants_from_csv_duckdb.py`` will download the data and convert the .csv-feeds to a fast relational [DuckDB database](https://duckdb.org/) for each topic.
+
+Context for each topic is given in [data](https://github.com/schiffma/OpenAI_DB/blob/main/data), this will be loaded once on the beginning of the ```openai.ChatCompletion``` session.
 
 ## Setup
 
@@ -34,13 +40,16 @@ Context is given in [gwr_ch_bfs_context.txt](https://github.com/schiffma/OpenAI_
    OPENAI_API_KEY=<your OpenAI API key>
    ```
 
-6. Create the GWR-DuckDB database:
+6. Create the GWR-DuckDB databases:
 
    ```bash
+   $ python load_Global_Power_Plants_from_csv_duckdb.py
    $ python load_GWR_PLZ_from_csv_duckdb.py
    ```
-
-7. Run the app:
+7. Set the topic ("gpp" or "gwr_ch_bfs") in openai_sql_duckdb.py
+    `` context = "gpp" ``
+   
+8. Run the app:
 
    ```bash
    $ python openai_sql_duckdb.py
