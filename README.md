@@ -10,7 +10,7 @@ Currently there are two configured topics as examples:
   [GPP](https://datasets.wri.org/dataset/globalpowerplantdatabase), a comprehensive, global, open source database of power plants.
 
 * gwr_ch_nfs
-   [GWR](https://www.housing-stat.ch/de/madd/public.html) Swiss data set, a data set about all entrances, buildings and dwellings according to official registration in Switzerland (compiled by the Swiss Federal Statistical Office).
+   [GWR](https://www.housing-stat.ch/de/madd/public.html), an open Swiss data set about all entrances, buildings and dwellings according to official registration in Switzerland (compiled by the Swiss Federal Statistical Office).
 
 The scripts ``load_GWR_PLZ_from_csv_duckdb.py`` and ``load_Global_Power_Plants_from_csv_duckdb.py`` will download the data and convert the .csv-feeds to a fast relational [DuckDB database](https://duckdb.org/) for each topic.
 
