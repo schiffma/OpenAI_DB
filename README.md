@@ -2,7 +2,7 @@
 
 ![logo](data/logo.jpg)
 
-Python program using the OpenAI-API to create SQL-statements based on a context given and execute them on a default database.
+Python/TK program using the OpenAI-API to have a general chat or to create SQL-statements based on a context given and execute them on a default database.
 
 Currently there are two configured topics as examples:
 
@@ -63,8 +63,6 @@ used to generate them.
 
 **gpp**
 ```
-runfile('G:/My Drive/GitHub/OpenAI_DB/openai_sql_duckdb.py', wdir='G:/My Drive/GitHub/OpenAI_DB')
-
 Question: 10 countries with most percentage of nuclear power
 prompt_tokens:  1064
 total_tokens:  1367
