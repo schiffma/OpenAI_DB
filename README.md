@@ -2,7 +2,7 @@
 
 ![logo](data/logo.jpg)
 
-Python/TK program using the OpenAI-API to have a general chat or to create SQL-statements based on a context given and execute them on a default database.
+Python/TK program using the OpenAI-API to have a general chat or to create and execute SQL-statements based on a context given and execute them on a corresponding database.
 
 Currently there are two configured topics as examples:
 
