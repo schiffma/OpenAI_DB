@@ -46,14 +46,15 @@ Context for each topic is given in [data](https://github.com/schiffma/OpenAI_DB/
    $ python load_Global_Power_Plants_from_csv_duckdb.py
    $ python load_GWR_PLZ_from_csv_duckdb.py
    ```
-7. Set the topic ("gpp" or "gwr_ch_bfs") in openai_sql_duckdb.py
-    `` context = "gpp" ``
-   
-8. Run the app:
+7. Run the app:
 
    ```bash
-   $ python openai_sql_duckdb.py
+   $ python openai_TK.py
    ```
+   
+8. Choose Context for SQL querying:
+
+   ![SQL-Contexts](data/sql_contexts.jpg)
    
 ## Examples
 

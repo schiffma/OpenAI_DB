@@ -49,7 +49,7 @@ class ChatBotOpenAI():
         conn = duckdb.connect(self.db_file, read_only=True) # just queries
         try:
             df = conn.sql(sql).df()
-            result = sql + "\n" + tabulate(df, headers='keys', tablefmt='psql') + "\n"
+            result = "\n" + tabulate(df, headers='keys', tablefmt='psql') + "\n"
             eval_sql_res = True
         except Exception as e:
             result = f"{answer}\nSQL-Error {e} for:\n"
