@@ -185,7 +185,7 @@ class ChatInterface(tk.Frame):
     def general(self):
         self.bot_prompt = self.base_prompt
         context = "general"
-        self.openaibot.set_context_str(context)
+        self.openaibot.set_context_db(context)
         self.__append_to_text_box(f"SQL-Context: {context} loaded.\n\n")
         
         

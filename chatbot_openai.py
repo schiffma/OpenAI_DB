@@ -24,7 +24,8 @@ class ChatBotOpenAI():
         self.context_file = { "general" : "data/general_context.txt",
                               "gpp" : "data/gpp_context.txt", 
                               "gwr" : "data/gwr_ch_bfs_context.txt"  }
-        self.context_db = { "gpp" : "data/gpp_duck.db", 
+        self.context_db = { "general" : None,
+                            "gpp" : "data/gpp_duck.db", 
                             "gwr" : "data/gwr_ch_bfs_duck.db"  }
        
         self.messages = [
